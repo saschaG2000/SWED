@@ -1,0 +1,43 @@
+Projekt- und Paketstruktur/ Project & Package Layout
+- Maven-ähnlich unter src/main/java gegliedert nach Verantwortlichkeit:
+  - app für die Einstiegsklasse
+  - model für die Domänen-Modelle
+  - pattern für die Observer-Pattern-Interfaces
+  - channel für die konkreten Observer (E-Mail, SMS)
+  - service für das Polling und das Strategy-Pattern
+- Modul-Deklaration in module-info.java, damit nur app exportiert wird
+
+Benennung/ Naming Conventions
+- Pakete alles klein geschrieben, sprechend (service, model, channel…)
+- Klassen und Interfaces in UpperCamelCase:
+  - Interfaces enden auf Subject, Observer oder ComparisonStrategy
+  - Implementierungen heißen z. B. SizeComparisonStrategy, EmailChannel
+- Methoden und Attribute in lowerCamelCase, z. B. hasChanged(), lastContentHash
+- Konstanten (sofern vorhanden) in UPPER_SNAKE_CASE
+
+Sichtbarkeit & Immutabilität/ Visibility & Immutability
+- Felder sind private bzw. private final (wenn sie nach dem Konstruktor nie mehr geändert werden)
+- Öffentliche Getter liefern nur das Nötigste
+- Collections werden per Collections.unmodifiableList(…) zurückgegeben
+
+Einrückung, Klammern & Zeilenlänge/ Bracing, Indentation & Line Length
+- Klammern im K&R-Stil (öffnende { auf derselben Zeile wie die Deklaration)
+- Einrückung: 4 Leerzeichen pro Ebene
+- Zeilenlänge möglichst ≤100 Zeichen
+
+Dokumentation & Kommentare/ Documentation & Comments
+- Javadoc für alle wichtigen öffentlichen Klassen und Methoden
+- Inline-Kommentare kennzeichnen komplexe Stellen (z. B. “Cache-Buster”)
+- Log-Präfixe ([DEBUG], [INFO], [ERROR]) sorgen für einheitliche Ausgaben
+
+Moderne Java-Features & Annotations/ Use of Annotations & Modern Java Features
+- @Override auf jeder überschriebenen Methode
+- Konstruktor-Injection für Abhängigkeiten
+- Methodenreferenzen (sub::checkAndNotify) für Scheduler-Tasks
+- try-with-resources für sicheres I/O
+
+Design-Pattern-Konventionen/ Design Pattern Naming
+- Klarer Suffix bei Implementierungen:
+  - SizeComparisonStrategy, HtmlComparisonStrategy, TextComparisonStrategy
+  - EmailChannel, SMSChannel
+- Generische Interface-Namen (Observer, ComparisonStrategy), damit Erweiterungen modular möglich sind
